@@ -18,10 +18,22 @@ limitations under the License.
 
 using namespace tensorflow;
 
-REGISTER_OP("ZeroOut")
-    .Input("to_zero: int32")
-    .Output("zeroed: int32")
+
+REGISTER_OP("Repeat")
+    .Input("input: T")
+    .Input("repeats: int32")
+    .Output("output: T")
+    .Attr("axis: int")
+    .Attr("T: type")
     .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
-      c->set_output(0, c->input(0));
       return Status::OK();
-    });
+    })
+    .Doc(R"doc(
+Repeat elements of an array
+input: A Tensor.
+repeats: An 1-D `int` Tensor. The number of repetitions for each element.
+  repeats is broadcasted to fit the shape of the given axis
+axis: An int. The axis along which to repeat values. By default, use the
+  flattened input array, and return a flat output array.
+output: A Tensor which has the same shape as a, except along the given axis.
+)doc");

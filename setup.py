@@ -21,11 +21,11 @@ from setuptools import find_packages
 from setuptools import setup
 from setuptools.dist import Distribution
 
-__version__ = '0.0.1'
+__version__ = "0.0.1"
 REQUIRED_PACKAGES = [
-    'tensorflow >= 1.12.0',
+    "tensorflow >= 1.12.0",
 ]
-project_name = 'tensorflow-zero-out'
+project_name = "tf-repeat"
 
 
 class BinaryDistribution(Distribution):
@@ -38,9 +38,9 @@ class BinaryDistribution(Distribution):
 setup(
     name=project_name,
     version=__version__,
-    description=('TensorFlow ZeroOut is a simple custom op for TensorFlow'),
-    author='Google Inc.',
-    author_email='opensource@google.com',
+    description=("TensorFlow implementation of np.repeat"),
+    author="Dominic Jack",
+    author_email="thedomjack@gmail.com",
     # Contained modules and scripts.
     packages=find_packages(),
     install_requires=REQUIRED_PACKAGES,
@@ -50,19 +50,19 @@ setup(
     distclass=BinaryDistribution,
     # PyPI package information.
     classifiers=[
-        'Development Status :: 4 - Beta',
-        'Intended Audience :: Developers',
-        'Intended Audience :: Education',
-        'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: Apache Software License',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Topic :: Scientific/Engineering :: Mathematics',
-        'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Software Development :: Libraries',
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Education",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Software Development :: Libraries",
     ],
-    license='Apache 2.0',
-    keywords='tensorflow custom op machine learning',
+    license="Apache 2.0",
+    keywords="tensorflow custom op repeat",
 )
