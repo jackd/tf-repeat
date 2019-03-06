@@ -50,3 +50,7 @@ def repeat(input, repeats, axis=None, name=None):
         input=input,
         repeats=repeats,
         axis=axis)
+
+
+# not much performance benefit here (if any)
+binary_repeat = _repeat_ops.binary_repeat

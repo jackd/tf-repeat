@@ -22,8 +22,12 @@ test: tf_repeat/python/ops/repeat_ops_test.py tf_repeat/python/ops/repeat_ops.py
 	$(PYTHON_BIN_PATH) tf_repeat/python/ops/repeat_ops_test.py
 
 
-benchmark: tf_repeat/python/ops/repeat_ops_benchmark.py tf_repeat/python/ops/repeat_ops.py $(TARGET_LIB)
-	$(PYTHON_BIN_PATH) tf_repeat/python/ops/repeat_ops_benchmark.py
+benchmark_repeat: tf_repeat/python/ops/benchmark_repeat.py tf_repeat/python/ops/repeat_ops.py $(TARGET_LIB)
+	$(PYTHON_BIN_PATH) tf_repeat/python/ops/benchmark_repeat.py
+
+
+benchmark_binary_repeat: tf_repeat/python/ops/benchmark_binary_repeat.py tf_repeat/python/ops/repeat_ops.py $(TARGET_LIB)
+	$(PYTHON_BIN_PATH) tf_repeat/python/ops/benchmark_binary_repeat.py
 
 pip_pkg: $(TARGET_LIB)
 	./build_pip_pkg.sh make artifacts

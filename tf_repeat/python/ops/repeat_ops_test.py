@@ -21,54 +21,64 @@ import numpy as np
 
 from tensorflow.python.framework import constant_op
 from tensorflow.python.platform import test
-from repeat_ops import repeat
+import repeat_ops
 
 
 class RepeatTest(test.TestCase):
 
   def testRepeatScalar(self):
-    with self.test_session():
-      v_tf = repeat(constant_op.constant(3), 4)
+    with self.session():
+      v_tf = repeat_ops.repeat(constant_op.constant(3), 4)
       v_np = np.repeat(3, 4)
-      self.assertAllEqual(v_tf.eval(), v_np)
+      self.assertAllEqual(self.evaluate(v_tf), v_np)
 
   def testRepeatMatrix(self):
-    with self.test_session():
+    with self.session():
       x = np.array([[1, 2], [3, 4]], dtype=np.int32)
-      v_tf = repeat(constant_op.constant(x), 2)
+      v_tf = repeat_ops.repeat(constant_op.constant(x), 2)
       v_np = np.repeat(x, 2)
-      self.assertAllEqual(v_tf.eval(), v_np)
+      self.assertAllEqual(self.evaluate(v_tf), v_np)
 
   def testRepeatMatrixAxis0(self):
-    with self.test_session():
+    with self.session():
       x = np.array([[1, 2], [3, 4]], dtype=np.int32)
       for axis in (0, 1):
-        v_tf = repeat(
+        v_tf = repeat_ops.repeat(
           constant_op.constant(x), constant_op.constant([1, 2]), axis=axis)
         v_np = np.repeat(x, [1, 2], axis=axis)
-        self.assertAllEqual(v_tf.eval(), v_np)
+        self.assertAllEqual(self.evaluate(v_tf), v_np)
 
   def testRepeatMatrixAxis1(self):
-    with self.test_session():
+    with self.session():
       x = np.array([[1, 2], [3, 4]], dtype=np.int32)
-      v_tf = repeat(constant_op.constant(x), constant_op.constant(3), axis=1)
+      v_tf = repeat_ops.repeat(
+        constant_op.constant(x), constant_op.constant(3), axis=1)
       v_np = np.repeat(x, 3, axis=1)
-      self.assertAllEqual(v_tf.eval(), v_np)
+      self.assertAllEqual(self.evaluate(v_tf), v_np)
 
   def testRepeatMatrixRepeatArray(self):
-    with self.test_session():
+    with self.session():
       x = np.array([[1, 2], [3, 4]], dtype=np.int32)
-      v_tf = repeat(constant_op.constant(x), [1, 2, 3, 4])
+      v_tf = repeat_ops.repeat(constant_op.constant(x), [1, 2, 3, 4])
       v_np = np.repeat(x, [1, 2, 3, 4])
-      self.assertAllEqual(v_tf.eval(), v_np)
+      self.assertAllEqual(self.evaluate(v_tf), v_np)
 
   def testRepeatDTypes(self):
     for dtype in [np.int8, np.int16, np.uint8, np.uint16, np.int32, np.int64]:
-      with self.test_session():
+      with self.session():
         x = np.array([[1, 2], [3, 4]], dtype=dtype)
-        v_tf = repeat(constant_op.constant(x), 2)
+        v_tf = repeat_ops.repeat(constant_op.constant(x), 2)
         v_np = np.repeat(x, 2)
-        self.assertAllEqual(v_tf.eval(), v_np)
+        self.assertAllEqual(self.evaluate(v_tf), v_np)
+
+  def testBinaryRepeat(self):
+    repeats = [5, 4, 6, 2, 10, 12, 13]
+    value = [i % 2 == 1 for i in range(len(repeats))]
+    expected = np.repeat(value, repeats)
+    with self.session():
+      actual = repeat_ops.binary_repeat(repeats)
+      self.assertAllEqual(self.evaluate(actual), expected)
+
 
 
 if __name__ == "__main__":

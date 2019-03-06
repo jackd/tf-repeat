@@ -37,3 +37,16 @@ axis: An int. The axis along which to repeat values. By default, use the
   flattened input array, and return a flat output array.
 output: A Tensor which has the same shape as a, except along the given axis.
 )doc");
+
+
+REGISTER_OP("BinaryRepeat")
+    .Input("repeats: int32")
+    .Output("output: bool")
+    .SetShapeFn([](::tensorflow::shape_inference::InferenceContext* c) {
+      return Status::OK();
+    })
+    .Doc(R"doc(
+Repeat alternating 0s and 1s.
+repeats: An 1-D `int` Tensor. The number of repetitions for each binary element.
+output: A 1D bool Tensor.
+)doc");
